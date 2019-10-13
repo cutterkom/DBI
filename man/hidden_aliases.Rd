@@ -79,10 +79,10 @@
 
 \S4method{dbListObjects}{DBIConnection}(conn, prefix = NULL, ...)
 
-\S4method{dbReadTable}{DBIConnection,character}(conn, name, ...,
-  row.names = FALSE, check.names = TRUE)
+\S4method{dbReadTable}{DBIConnection,character}(conn, name, n = NULL,
+  ..., row.names = FALSE, check.names = TRUE)
 
-\S4method{dbReadTable}{DBIConnection,Id}(conn, name, ...)
+\S4method{dbReadTable}{DBIConnection,Id}(conn, name, n = NULL, ...)
 
 \S4method{dbWriteTable}{DBIConnection,Id}(conn, name, value, ...)
 

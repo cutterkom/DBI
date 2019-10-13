@@ -4,7 +4,7 @@
 \alias{dbReadTable}
 \title{Copy data frames from database tables}
 \usage{
-dbReadTable(conn, name, ...)
+dbReadTable(conn, name, n = NULL, ...)
 }
 \arguments{
 \item{conn}{A \linkS4class{DBIConnection} object, as returned by
@@ -12,6 +12,8 @@ dbReadTable(conn, name, ...)
 
 \item{name}{A character string specifying the unquoted DBMS table name,
 or the result of a call to \code{\link[=dbQuoteIdentifier]{dbQuoteIdentifier()}}.}
+
+\item{n}{The number of rows to read, use \code{NULL} for "no limit".}
 
 \item{...}{Other parameters passed on to methods.}
 }
@@ -48,10 +50,10 @@ or invalid connection.
 An error is raised
 if \code{name} cannot be processed with \code{\link[=dbQuoteIdentifier]{dbQuoteIdentifier()}}
 or if this results in a non-scalar.
-Unsupported values for \code{row.names} and \code{check.names}
+Unsupported values for \code{row.names}, \code{check.names} and \code{max_rows}
 (non-scalars,
 unsupported data types,
-\code{NA} for \code{check.names})
+\code{NA} for \code{check.names} or \code{max_rows})
 also raise an error.
 }
 \description{
@@ -69,11 +71,12 @@ The following arguments are not part of the \code{dbReadTable()} generic
 but are part of the DBI specification:
 \itemize{
 \item \code{row.names} (default: \code{FALSE})
-\item \code{check.names}
+\item \code{check.names} (default: \code{FALSE})
+\item \code{max_rows} (default: \code{NULL})
 }
 
 They must be provided as named arguments.
-See the "Value" section for details on their usage.
+See the "Value" and "Specification" sections for details on their usage.
 
 }
 
@@ -87,6 +90,10 @@ to support databases that allow non-syntactic names for their objects:
 quoting,
 perhaps by calling \code{dbQuoteIdentifier(conn, x = name)}
 \item If the result of a call to \code{\link[=dbQuoteIdentifier]{dbQuoteIdentifier()}}: no more quoting is done
+The \code{max_rows} argument, if provided, limits the number of rows returned.
+If the table contains fewer rows, no error or warning is raised.
+Passing \code{NULL} returns the entire table,
+passing 0 returns an empty table with correctly typed columns.
 }
 
 }
